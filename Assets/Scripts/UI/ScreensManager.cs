@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScreensManager : MonoBehaviour, IScreenSwitcher
 {    
-    [SerializeField] private GameObject[] _screens;
-    private int currentScreenIndex = 0;       
-    
+    [SerializeField] private GameObject[] _screens; 
+    [SerializeField] private GameObject _tutorial;
+    private int currentScreenIndex = 0;
+
+    private void Awake()
+    {
+        _tutorial.SetActive(false);
+    }
     private void Start()
     {
         _screens[0].SetActive(true);
@@ -39,4 +45,13 @@ public class ScreensManager : MonoBehaviour, IScreenSwitcher
         int previousScreenIndex = (currentScreenIndex - 1 + _screens.Length) % _screens.Length;
         ShowScreen(previousScreenIndex);
     }    
+
+    public void OnButtonOpenTutorial()
+    {
+        _tutorial.SetActive(true);        
+    }
+    public void OnButtonCloseTutorial()
+    {
+        _tutorial.SetActive(false);        
+    }
 }
