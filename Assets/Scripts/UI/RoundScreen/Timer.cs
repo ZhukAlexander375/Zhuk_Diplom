@@ -13,12 +13,12 @@ public class Timer : MonoBehaviour
     private float currentTime = 0f;
 
     public static UnityEvent OnTimeOut = new();
-    //public static UnityEvent<float> OnTimeText = new(); 
+    public static UnityEvent<int, int> OnTimeTextUpdate = new(); 
 
     void OnEnable()
     {
         _isTimerRunning = false;
-        ResetTimer();
+        ResetTimer();       
     }    
 
     public void StartTimer()
@@ -26,6 +26,7 @@ public class Timer : MonoBehaviour
         _timerSlider.maxValue = _maxTime;
         _timerSlider.value = _maxTime;
         _isTimerRunning = true;
+        //Debug.Log(_maxTime.ToString());
     }
 
     void Update()
@@ -35,7 +36,7 @@ public class Timer : MonoBehaviour
         _timerSlider.value -= Time.deltaTime;
         _fillImage.color = _gradient.Evaluate(_timerSlider.value / _timerSlider.maxValue);
 
-        //UpdateTimerText();
+        UpdateTimerText();
 
         if (_timerSlider.value <= 0)
         {            
@@ -43,11 +44,13 @@ public class Timer : MonoBehaviour
         }
     }
 
-   //private void UpdateTimerText() //mb without ?
-   //{
-   //     float timeText = _timerSlider.value;
-   //     OnTimeText.Invoke(timeText);
-   // }
+    private void UpdateTimerText()
+    {
+        float timeText = _timerSlider.value;
+        int minuts = Mathf.FloorToInt(timeText / 60);
+        int seconds = Mathf.FloorToInt(timeText % 60);
+        OnTimeTextUpdate.Invoke(minuts, seconds);
+    }
 
     public void ResetTimer()
     {        
@@ -56,11 +59,22 @@ public class Timer : MonoBehaviour
     }
     private void StopTimer()
     {
+        _maxTime = 60f;
         _isTimerRunning = false;        
     }
 
     private void OnDisable()
     {
-        StopTimer();
+        StopTimer();        
+    }
+
+    public void SetTwoMinuts(float maxTime)
+    {
+        _maxTime = maxTime;
+    }
+
+    public void SetOneMinut(float maxTime)
+    {
+        _maxTime = maxTime;
     }
 }

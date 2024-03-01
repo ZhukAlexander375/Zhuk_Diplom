@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     public static UnityEvent OnDecreaseNumOfPoints = new();
     public static UnityEvent OnIncreaseNumOfRounds = new();
     public static UnityEvent OnDecreaseNumOfRounds = new();
+    [SerializeField] private bool IsSetTwoMinuts = false;
 
 
     [Header("For Create Teams")]
@@ -38,13 +40,14 @@ public class GameManager : MonoBehaviour
     public static UnityEvent OnRoundStart = new();
 
     [Header("Round")]
-    [SerializeField] private Timer _timer;
+    [SerializeField] private Timer _timer;    
     public static UnityEvent<int, int> UpdateRoundInfo = new();
     public static UnityEvent<string> UpdateCurrentTeam = new();
     public static UnityEvent<int> OnDiceResult = new();
     public static UnityEvent<int, int> UpdateScore = new();
     private IDiceTopShow _dice;
-    private int moveCounter = 1;    
+    private int moveCounter = 1;
+    
 
     [Header("EndGame")]
     public static UnityEvent OnEndGame = new();
@@ -97,6 +100,11 @@ public class GameManager : MonoBehaviour
     public int GetCurrentRound()
     {
         return currentRound;
+    }
+
+    public void IncreaseTimeForAction(bool isIncrease)
+    {
+        IsSetTwoMinuts = isIncrease;
     }
     #endregion
 
@@ -194,6 +202,15 @@ public class GameManager : MonoBehaviour
     }
     public void StartTimer()
     {
+        //Debug.Log(IsSetTwoMinuts.ToString());
+        //Debug.Log(currentDiceTopFace);
+        if (IsSetTwoMinuts && currentDiceTopFace == 6)
+        {
+            _timer.SetTwoMinuts(120f);
+            _timer.StartTimer();
+            return;
+        }
+        
         _timer.StartTimer();
     }
 
@@ -213,7 +230,7 @@ public class GameManager : MonoBehaviour
         int teamIndex = GetTeamIndexForRound();
         UpdateCurrentTeamScore(teamIndex, points);
 
-        Debug.Log("посмотрим очечи" + string.Join(", ", teamScore));
+        //Debug.Log("посмотрим очечи" + string.Join(", ", teamScore));
         UpdateScore.Invoke(teamIndex, teamScore[teamIndex]);
     }
 
@@ -281,6 +298,11 @@ public class GameManager : MonoBehaviour
     private void EndGame()
     {
         OnEndGame.Invoke();
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }   
 #endregion

@@ -14,6 +14,8 @@ public class RoundScreen : MonoBehaviour
     [SerializeField] private GameObject _buttonWin;
     [SerializeField] private GameObject _timer;
     [SerializeField] private GameObject _timeOutScreen;
+    [SerializeField] private TMP_Text _timerText;
+   
     private GameManager gameManager;
     private bool IsTimeOut;
 
@@ -22,6 +24,7 @@ public class RoundScreen : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         GameManager.OnDiceResult.AddListener(ShowAction);
         Timer.OnTimeOut.AddListener(HandleTimeOut);
+        Timer.OnTimeTextUpdate.AddListener(UpdateTimeScreen);
     }
 
     private void Start()
@@ -35,6 +38,7 @@ public class RoundScreen : MonoBehaviour
         IsTimeOut = false;
         _buttonStartTimer.SetActive(true);
         _timer.SetActive(false);
+        _timerText.gameObject.SetActive(false);
         _buttonLose.SetActive(false);
         _buttonWin.SetActive(false);
         _timeOutScreen.SetActive(false);
@@ -44,10 +48,16 @@ public class RoundScreen : MonoBehaviour
     {
         _buttonStartTimer.SetActive(false);
         _timer.SetActive(true);
+        _timerText.gameObject.SetActive(true);
         _buttonLose.SetActive(true);
         _buttonWin.SetActive(true);
 
         gameManager.StartTimer();
+    }
+
+    private void UpdateTimeScreen(int minuts, int seconds)
+    {
+        _timerText.text = $"{minuts} : {seconds}";
     }
     public void ShowAction(int resultDice)
     {
@@ -102,5 +112,5 @@ public class RoundScreen : MonoBehaviour
     public void OnTimeOutScreen()
     {
         _timeOutScreen.SetActive(false);
-    }    
+    }
 }
