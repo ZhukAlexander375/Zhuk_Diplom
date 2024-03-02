@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class RoundStartScreen : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class RoundStartScreen : MonoBehaviour
     [SerializeField] private GameObject _diceResult;
     [SerializeField] private TMP_Text _diceResultField;
     [SerializeField] private TMP_Text _actionOfDiceFace;
-    [SerializeField] private GameObject _buttonRollDice;
-    [SerializeField] private GameObject _buttonStartRound;
+    [SerializeField] private Button _buttonRollDice;
+    [SerializeField] private Button _buttonStartRound;
     [SerializeField] private GameObject _roundStartScreen;
     [SerializeField] private GameObject _roundScreen;
     
@@ -39,8 +40,8 @@ public class RoundStartScreen : MonoBehaviour
         targetRound = gameManager.GetTargetNumOfRounds();
         //currentTeamForRound = gameManager.GetTeamForRound();
 
-        _buttonRollDice.SetActive(true);
-        _buttonStartRound.SetActive(false);
+        _buttonRollDice.gameObject.SetActive(true);
+        _buttonStartRound.gameObject.SetActive(false);
         _diceResult.SetActive(false);
 
         UpdateCurrentRoundInfo(startRound, targetRound);
@@ -54,7 +55,7 @@ public class RoundStartScreen : MonoBehaviour
 
     private void UpdateCurrentTeamInfo(string teamName)
     {
-        if (!_buttonStartRound.activeSelf)
+        if (!_buttonStartRound.gameObject.activeSelf)
         {
             _currentTeamField.text = $"ход команды: {gameManager.GetTeamForRound()}";
         }
@@ -63,8 +64,8 @@ public class RoundStartScreen : MonoBehaviour
     public void OnButtonRollDice()
     {
         _diceResult.SetActive(true);
-        _buttonRollDice.SetActive(false);
-        _buttonStartRound.SetActive(true);
+        _buttonRollDice.gameObject.SetActive(false);
+        _buttonStartRound.gameObject.SetActive(true);
 
         gameManager.RollDice();
     }
@@ -87,7 +88,7 @@ public class RoundStartScreen : MonoBehaviour
             case 2: return "наоборот";
             case 3: return "жесты";
             case 4: return "рисунок";
-            case 5: return "пластилин";
+            case 5: return "пластилин*";
             case 6: return "да/нет";
             default: return string.Empty;
         }
@@ -95,13 +96,14 @@ public class RoundStartScreen : MonoBehaviour
     public void OnButtonStartRound()
     {
         _roundScreen.SetActive(true);
-        _roundStartScreen.SetActive(false);       
+        _roundStartScreen.SetActive(false);        
+        gameManager.DisplayRandomWord();
     }
 
     private void OnDisable()
     {
         _diceResult.SetActive(false);
-        _buttonRollDice.SetActive(true);
-        _buttonStartRound.SetActive(false);
+        _buttonRollDice.gameObject.SetActive(true);
+        _buttonStartRound.gameObject.SetActive(false);
     }
 }

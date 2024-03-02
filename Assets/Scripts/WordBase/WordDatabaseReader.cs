@@ -8,7 +8,8 @@ public class WordDatabaseReader : MonoBehaviour
 {
     [SerializeField] private TMP_Text _displayText;
 
-    private List<string> _wordList = new List<string>();
+    private List<string> _wordList = new();
+    private List<string> _usedWords = new();
 
     void Awake()
     {
@@ -16,12 +17,12 @@ public class WordDatabaseReader : MonoBehaviour
     }
 
     void LoadWordDatabase()
-    {        
-        string filePath = "Assets/StreamingAssets/wordDatabase.txt";
+    {
+        TextAsset wordDatabase = Resources.Load<TextAsset>("wordDatabase");        
 
-        if (File.Exists(filePath))
+        if (wordDatabase != null)
         {
-            string[] lines = File.ReadAllLines(filePath);
+            string[] lines = wordDatabase.text.Split('\n');
             _wordList.AddRange(lines);
         }
         else
@@ -30,17 +31,36 @@ public class WordDatabaseReader : MonoBehaviour
         }
     }
 
-    public void DisplayRandomWord()
+    public string GetRandomWord()
     {
         if (_wordList.Count > 0)
         {
-            int randomIndex = Random.Range(0, _wordList.Count);
-            string randomWord = _wordList[randomIndex];
-            _displayText.text = randomWord;
+            if (_usedWords.Count == _wordList.Count)
+            {                
+                _usedWords.Clear();
+                return "переиспользуем слова";
+            }
+
+            string randomWord;
+
+            do
+            {
+                int randomIndex = Random.Range(0, _wordList.Count);
+                randomWord = _wordList[randomIndex];
+            }
+
+            while (_usedWords.Contains(randomWord));
+
+            _usedWords.Add(randomWord);
+
+            //Debug.Log("заюзаные слова: " + string.Join(", ", _usedWords));
+            
+            return randomWord;
         }
+
         else
         {
-            _displayText.text = "Word database is empty!";
+            return "Word database is empty!";
         }
     }
 }

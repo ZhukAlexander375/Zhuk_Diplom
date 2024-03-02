@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RulesWindowManager : MonoBehaviour, IScreenSwitcher
 {
@@ -8,8 +9,7 @@ public class RulesWindowManager : MonoBehaviour, IScreenSwitcher
     private int currentRulesWindowIndex = 0;
 
     [SerializeField] private GameObject _rulesShortWindow;
-    [SerializeField] private GameObject _buttonCallRulesShort;
-    [SerializeField] private GameObject _buttonCloseRulesShort;
+    [SerializeField] private Button _buttonCallRulesShort;   
     
     private void Start()   
     {
@@ -47,12 +47,12 @@ public class RulesWindowManager : MonoBehaviour, IScreenSwitcher
     public void ShowRulesShort()
     {
         _rulesShortWindow.SetActive(true);
-        _buttonCallRulesShort.SetActive(false);
+        _buttonCallRulesShort.gameObject.SetActive(false);
     }
 
     public void CloseRulesShort()
     {
         _rulesShortWindow.SetActive(false);
-        _buttonCallRulesShort.SetActive(true);
+        _buttonCallRulesShort.gameObject.SetActive(true);
     }
 }

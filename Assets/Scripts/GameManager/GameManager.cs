@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
     public static UnityEvent<string> UpdateCurrentTeam = new();
     public static UnityEvent<int> OnDiceResult = new();
     public static UnityEvent<int, int> UpdateScore = new();
+    public static UnityEvent<string> OnWordForMove = new();
+    private WordDatabaseReader wordDatabaseReader;
+    string currentWordForMove;
     private IDiceTopShow _dice;
     private int moveCounter = 1;
     
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
+        wordDatabaseReader = FindObjectOfType<WordDatabaseReader>();
         _dice = FindObjectOfType<DiceTest>();
     }
 
@@ -200,6 +204,13 @@ public class GameManager : MonoBehaviour
     {
         return currentDiceTopFace;
     }
+
+    public void DisplayRandomWord()
+    {        
+        currentWordForMove = wordDatabaseReader.GetRandomWord();
+        OnWordForMove.Invoke(currentWordForMove);       
+    }
+
     public void StartTimer()
     {
         //Debug.Log(IsSetTwoMinuts.ToString());

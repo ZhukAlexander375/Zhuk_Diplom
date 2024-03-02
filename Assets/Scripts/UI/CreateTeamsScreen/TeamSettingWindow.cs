@@ -41,7 +41,8 @@ public class TeamSettingWindow : MonoBehaviour
                 _teamNameFields[currentTeamIndex].text = gameManager.GetTeamSettings(currentTeamIndex);
                 //Debug.Log($"создаю команду с названием {_teamNameFields[currentTeamIndex].text} и индексом {currentTeamIndex} ");
             }
-        }        
+        }
+        _inputField.text = "";
         CloseSettings();
     }
     

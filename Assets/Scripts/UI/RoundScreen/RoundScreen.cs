@@ -7,14 +7,16 @@ using UnityEngine.UI;
 public class RoundScreen : MonoBehaviour
 {
     [SerializeField] private TMP_Text _actionOfDiceFace;
+    [SerializeField] private TMP_Text _displayText;
     [SerializeField] private GameObject _roundScreen;
     [SerializeField] private GameObject _resultScreen;
-    [SerializeField] private GameObject _buttonStartTimer;
-    [SerializeField] private GameObject _buttonLose;
-    [SerializeField] private GameObject _buttonWin;
     [SerializeField] private GameObject _timer;
     [SerializeField] private GameObject _timeOutScreen;
     [SerializeField] private TMP_Text _timerText;
+    [SerializeField] private Button _buttonStartTimer;
+    [SerializeField] private Button _buttonLose;
+    [SerializeField] private Button _buttonWin;
+    
    
     private GameManager gameManager;
     private bool IsTimeOut;
@@ -23,6 +25,7 @@ public class RoundScreen : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         GameManager.OnDiceResult.AddListener(ShowAction);
+        GameManager.OnWordForMove.AddListener(DisplayWord);
         Timer.OnTimeOut.AddListener(HandleTimeOut);
         Timer.OnTimeTextUpdate.AddListener(UpdateTimeScreen);
     }
@@ -36,21 +39,26 @@ public class RoundScreen : MonoBehaviour
     private void OnEnable()
     {
         IsTimeOut = false;
-        _buttonStartTimer.SetActive(true);
+        _buttonStartTimer.gameObject.SetActive(true);
         _timer.SetActive(false);
         _timerText.gameObject.SetActive(false);
-        _buttonLose.SetActive(false);
-        _buttonWin.SetActive(false);
+        _buttonLose.gameObject.SetActive(false);
+        _buttonWin.gameObject.SetActive(false);
         _timeOutScreen.SetActive(false);
+    }
+
+    private void DisplayWord(string word)
+    {       
+        _displayText.text = word;
     }
 
     public void OnButtonStartTimer()
     {
-        _buttonStartTimer.SetActive(false);
+        _buttonStartTimer.gameObject.SetActive(false);
         _timer.SetActive(true);
         _timerText.gameObject.SetActive(true);
-        _buttonLose.SetActive(true);
-        _buttonWin.SetActive(true);
+        _buttonLose.gameObject.SetActive(true);
+        _buttonWin.gameObject.SetActive(true);
 
         gameManager.StartTimer();
     }
@@ -73,7 +81,7 @@ public class RoundScreen : MonoBehaviour
             case 2: return "наоборот";
             case 3: return "жесты";
             case 4: return "рисунок";
-            case 5: return "пластилин";
+            case 5: return "пластилин*";
             case 6: return "да/нет";
             default: return string.Empty;
         }

@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class CreateTemsScreen : MonoBehaviour
 {
     [SerializeField] private GameObject _teamSettings;
-    [SerializeField] private GameObject[] _buttonsAddTeam;
+    [SerializeField] private Button[] _buttonsAddTeam;
     [SerializeField] private GameObject[] _teams;
 
     [SerializeField] private TeamSettingWindow _teamSettingWindow;
@@ -28,11 +29,11 @@ public class CreateTemsScreen : MonoBehaviour
         {
             if (_teams[i].activeSelf)
             {
-                _buttonsAddTeam[i].SetActive(false);
+                _buttonsAddTeam[i].gameObject.SetActive(false);
             }
             else
             {
-                _buttonsAddTeam[i].SetActive(true);
+                _buttonsAddTeam[i].gameObject.SetActive(true);
             }
         }
     }
@@ -41,14 +42,14 @@ public class CreateTemsScreen : MonoBehaviour
     {
         gameManager.DeleteTeam(teamIndex);
         _teams[teamIndex].SetActive(false);
-        _buttonsAddTeam[teamIndex].SetActive(true);
+        _buttonsAddTeam[teamIndex].gameObject.SetActive(true);
 
         _teamSettingWindow.CleanTeamNameFields(teamIndex);
     }
 
     public void OnButtonAddTeam(int teamIndex)
     {
-        _buttonsAddTeam[teamIndex].SetActive(false);
+        _buttonsAddTeam[teamIndex].gameObject.SetActive(false);
         _teams[teamIndex].SetActive(true);
     }
 }
