@@ -7,17 +7,19 @@ public class EndScreen : MonoBehaviour
 {
     [SerializeField] private TMP_Text _winnerField;
 
-    private GameManager gameManager;
+    //private GameManager gameManager;
+    private TeamsManager teamsManager;
 
     private void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
-        GameManager.FastWinningInfo.AddListener(ShowWinner);
+        //gameManager = FindObjectOfType<GameManager>();
+        teamsManager = FindObjectOfType<TeamsManager>();
+        GameManager.WinningInfo.AddListener(ShowWinner);
     }
 
     private void ShowWinner(int winningTeamIndex, int winningScore)
     {
-        string winningTeamName = gameManager.GetTeamSettings(winningTeamIndex);
+        string winningTeamName = teamsManager.GetTeamSettings(winningTeamIndex);
         _winnerField.text = $"победила команда: {winningTeamName} со счетом {winningScore}";
     }
 }

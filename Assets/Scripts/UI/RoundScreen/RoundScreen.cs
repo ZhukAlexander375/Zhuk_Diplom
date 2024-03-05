@@ -16,13 +16,14 @@ public class RoundScreen : MonoBehaviour
     [SerializeField] private Button _buttonStartTimer;
     [SerializeField] private Button _buttonLose;
     [SerializeField] private Button _buttonWin;
-    
-   
+
+    private TeamsManager teamsManager;
     private GameManager gameManager;
     private bool IsTimeOut;
 
     private void Awake()
     {
+        teamsManager = FindObjectOfType<TeamsManager>();
         gameManager = FindObjectOfType<GameManager>();
         GameManager.OnDiceResult.AddListener(ShowAction);
         GameManager.OnWordForMove.AddListener(DisplayWord);
@@ -90,7 +91,7 @@ public class RoundScreen : MonoBehaviour
     public void OnButtonLose()
     {
         //gameManager.CurrentTeamEndFailure(gameManager.GetTeamIndexForRound());
-        gameManager.CurrentTeamEndFailure();
+        teamsManager.CurrentTeamEndFailure();
         OpenResultScreen();
     }
 
@@ -99,7 +100,7 @@ public class RoundScreen : MonoBehaviour
         if (IsTimeOut == false)
         {
             //gameManager.CurrentTeamEndSuccess(gameManager.GetTeamIndexForRound());
-            gameManager.CurrentTeamEndSuccess();
+            teamsManager.CurrentTeamEndSuccess();
             OpenResultScreen();
             IsTimeOut = false;
         }

@@ -17,16 +17,22 @@ public class RoundStartScreen : MonoBehaviour
     [SerializeField] private Button _buttonStartRound;
     [SerializeField] private GameObject _roundStartScreen;
     [SerializeField] private GameObject _roundScreen;
-    
 
     private GameManager gameManager;
+    private PointsAndRoundsManager pointsAndRoundsManager;
+    private TeamsManager teamsManager;
+
     private int startRound;
     private int targetRound;
     private string currentTeamForRound;
 
     private void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();       
+        pointsAndRoundsManager = FindObjectOfType<PointsAndRoundsManager>();
+        gameManager = FindObjectOfType<GameManager>();
+        teamsManager = FindObjectOfType<TeamsManager>();
+
+
 
         GameManager.UpdateRoundInfo.AddListener(UpdateCurrentRoundInfo);
         GameManager.UpdateCurrentTeam.AddListener(UpdateCurrentTeamInfo);
@@ -36,8 +42,9 @@ public class RoundStartScreen : MonoBehaviour
 
     private void Start()
     {
-        startRound = gameManager.GetCurrentRound();
-        targetRound = gameManager.GetTargetNumOfRounds();
+        startRound = pointsAndRoundsManager.GetCurrentRound();
+        targetRound = pointsAndRoundsManager.GetTargetNumOfRounds();
+
         //currentTeamForRound = gameManager.GetTeamForRound();
 
         _buttonRollDice.gameObject.SetActive(true);
@@ -57,7 +64,7 @@ public class RoundStartScreen : MonoBehaviour
     {
         if (!_buttonStartRound.gameObject.activeSelf)
         {
-            _currentTeamField.text = $"ход команды: {gameManager.GetTeamForRound()}";
+            _currentTeamField.text = $"ход команды: {teamsManager.GetTeamForRound()}";
         }
     }
 

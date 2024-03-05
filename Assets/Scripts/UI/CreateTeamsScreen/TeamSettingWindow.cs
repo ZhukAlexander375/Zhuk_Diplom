@@ -8,16 +8,16 @@ public class TeamSettingWindow : MonoBehaviour
     [SerializeField] private GameObject _teamSettings;    
     [SerializeField] private List<TMP_Text> _teamNameFields;    
     [SerializeField] private TMP_InputField _inputField;    
-
-    private GameManager gameManager;
+        
+    private TeamsManager teamsManager;
     private int currentTeamIndex;
 
     private void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        teamsManager = FindObjectOfType<TeamsManager>();        
     }
     
-    public void OnButtonTeamNameChange(int teamIndex)
+    public void OnButtonSetTeamName(int teamIndex)
     {        
         currentTeamIndex = teamIndex;
         //Debug.Log($"жму кнопку с индексом {currentTeamIndex}");
@@ -34,11 +34,11 @@ public class TeamSettingWindow : MonoBehaviour
         string text = _inputField.text;
         if (!string.IsNullOrWhiteSpace(text))
         {
-            gameManager.SetTeamSettings(currentTeamIndex, text);
+            teamsManager.SetTeamSettings(currentTeamIndex, text);
             //Debug.Log($"вызов SetTeamSettings введенный текст {text} с и индексом  {currentTeamIndex}");
             if (currentTeamIndex >= 0 && currentTeamIndex < _teamNameFields.Count)
             {
-                _teamNameFields[currentTeamIndex].text = gameManager.GetTeamSettings(currentTeamIndex);
+                _teamNameFields[currentTeamIndex].text = teamsManager.GetTeamSettings(currentTeamIndex);
                 //Debug.Log($"создаю команду с названием {_teamNameFields[currentTeamIndex].text} и индексом {currentTeamIndex} ");
             }
         }

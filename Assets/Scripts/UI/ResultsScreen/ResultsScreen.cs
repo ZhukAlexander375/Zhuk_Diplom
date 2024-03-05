@@ -10,18 +10,23 @@ public class ResultsScreen : MonoBehaviour
     [SerializeField] private GameObject _endScreen;    
     [SerializeField] private TMP_Text[] _teamsNameField;
     [SerializeField] private TMP_Text[] _teamsResultField;
+        
+    private PointsAndRoundsManager pointsAndRoundsManager;
+    private TeamsManager teamsManager;
     private GameManager gameManager;
 
     private void Awake()
     {
+        pointsAndRoundsManager = FindObjectOfType<PointsAndRoundsManager>();
+        teamsManager = FindObjectOfType<TeamsManager>();
         gameManager = FindObjectOfType<GameManager>();
-        GameManager.UpdateScore.AddListener(UpdateResulScreens);
+        TeamsManager.UpdateScore.AddListener(UpdateResulScreens);
         GameManager.OnEndGame.AddListener(OpenEndScreen);
     }
 
     private void Start()
     {
-        for (int i = 0; i < gameManager.GetCountOfTeams(); i++)
+        for (int i = 0; i < teamsManager.GetCountOfTeams(); i++)
         {           
             GetTeamsNames(i);
         }           
@@ -31,9 +36,9 @@ public class ResultsScreen : MonoBehaviour
     {
         if (indexTeam >= 0 && indexTeam < _teamsNameField.Length)
         {
-            if (!string.IsNullOrWhiteSpace(gameManager.GetTeamSettings(indexTeam)))
+            if (!string.IsNullOrWhiteSpace(teamsManager.GetTeamSettings(indexTeam)))
             {
-                _teamsNameField[indexTeam].text = $"{indexTeam + 1}: {gameManager.GetTeamSettings(indexTeam)}";               
+                _teamsNameField[indexTeam].text = $"{indexTeam + 1}: {teamsManager.GetTeamSettings(indexTeam)}";               
             }
             else
             {
@@ -46,9 +51,9 @@ public class ResultsScreen : MonoBehaviour
     {
         if (indexTeam >= 0 && indexTeam < _teamsResultField.Length)
         {
-            if (!string.IsNullOrWhiteSpace(gameManager.GetTeamSettings(indexTeam)))
+            if (!string.IsNullOrWhiteSpace(teamsManager.GetTeamSettings(indexTeam)))
             {
-                _teamsResultField[indexTeam].text = $"{points}/{gameManager.GetTargetNumOfPoints()}";
+                _teamsResultField[indexTeam].text = $"{points} / {pointsAndRoundsManager.GetTargetNumOfPoints()}";
             }
             else
             {

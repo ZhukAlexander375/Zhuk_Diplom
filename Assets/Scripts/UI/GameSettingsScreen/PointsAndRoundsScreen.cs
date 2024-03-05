@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class PointsAndRounds : MonoBehaviour
+public class PointsAndRoundsScreen : MonoBehaviour
 {
     [SerializeField] private TMP_Text _numOfPoints;
     [SerializeField] private TMP_Text _numOfRounds;
@@ -17,43 +17,46 @@ public class PointsAndRounds : MonoBehaviour
 
 
     private GameManager gameManager;
+    private PointsAndRoundsManager pointsAndRoundsManager;
 
     private void Awake()
     {
         IsSetTwoMinuts = false;
         _buttonSetTwoMinuts.gameObject.SetActive(true);
         _buttonUndoTwoMinuts.gameObject.SetActive(false);
-        gameManager = FindObjectOfType<GameManager>();
-        GameManager.OnIncreaseNumOfPoints.AddListener(UpdatePointsText);
-        GameManager.OnDecreaseNumOfPoints.AddListener(UpdatePointsText);
-        GameManager.OnIncreaseNumOfRounds.AddListener(UpdateRoundsText);
-        GameManager.OnDecreaseNumOfRounds.AddListener(UpdateRoundsText);
+        pointsAndRoundsManager = FindObjectOfType<PointsAndRoundsManager>();
+
+
+        PointsAndRoundsManager.OnIncreaseNumOfPoints.AddListener(UpdatePointsText);
+        PointsAndRoundsManager.OnDecreaseNumOfPoints.AddListener(UpdatePointsText);
+        PointsAndRoundsManager.OnIncreaseNumOfRounds.AddListener(UpdateRoundsText);
+        PointsAndRoundsManager.OnDecreaseNumOfRounds.AddListener(UpdateRoundsText);
     }
 
     public void OnButtonPointsPlus()
     {
-        gameManager.IncreaseNumOfPoints(_stepOfPoints);       
+        pointsAndRoundsManager.IncreaseNumOfPoints(_stepOfPoints);       
     }
     public void OnButtonPointsMinus()
     {
-        gameManager.DecreaseNumOfPoints(_stepOfPoints);        
+        pointsAndRoundsManager.DecreaseNumOfPoints(_stepOfPoints);        
     }
     private void UpdatePointsText()
     {
-        _numOfPoints.text = gameManager.GetTargetNumOfPoints().ToString();
+        _numOfPoints.text = pointsAndRoundsManager.GetTargetNumOfPoints().ToString();
     }
 
     public void OnButtonRoundsPlus()
     {
-        gameManager.IncreaseNumOfRounds(_stepOfRounds);
+        pointsAndRoundsManager.IncreaseNumOfRounds(_stepOfRounds);
     }
     public void OnButtonRoundsMinus()
     {
-        gameManager.DecreaseNumOfRounds(_stepOfRounds);
+        pointsAndRoundsManager.DecreaseNumOfRounds(_stepOfRounds);
     }
     private void UpdateRoundsText()
     {
-        _numOfRounds.text = gameManager.GetTargetNumOfRounds().ToString();
+        _numOfRounds.text = pointsAndRoundsManager.GetTargetNumOfRounds().ToString();
     }   
 
     public void OnButtonSetTwoMinuts()
@@ -70,7 +73,7 @@ public class PointsAndRounds : MonoBehaviour
     {
         _buttonUndoTwoMinuts.gameObject.SetActive(value);
         IsSetTwoMinuts = value;
-        gameManager.IncreaseTimeForAction(IsSetTwoMinuts);
+        pointsAndRoundsManager.IncreaseTimeForAction(IsSetTwoMinuts);
     }
 
 }       

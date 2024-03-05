@@ -15,15 +15,22 @@ public class CurrentGameInfo : MonoBehaviour
     [SerializeField] private GameObject _failStartWindow;
 
     private GameManager gameManager;
+    private TeamsManager teamsManager;
+    private PointsAndRoundsManager pointsAndRoundsManager;
+
+
 
     private void Awake()
     {
+        pointsAndRoundsManager = FindObjectOfType<PointsAndRoundsManager>();        
+        teamsManager = FindObjectOfType<TeamsManager>();
         gameManager = FindObjectOfType<GameManager>();
-        GameManager.OnIncreaseNumOfPoints.AddListener(UpdatePointsText);
-        GameManager.OnDecreaseNumOfPoints.AddListener(UpdatePointsText);
-        GameManager.OnIncreaseNumOfRounds.AddListener(UpdateRoundsText);       
+
+        PointsAndRoundsManager.OnIncreaseNumOfPoints.AddListener(UpdatePointsText);
+        PointsAndRoundsManager.OnDecreaseNumOfPoints.AddListener(UpdatePointsText);
+        PointsAndRoundsManager.OnIncreaseNumOfRounds.AddListener(UpdateRoundsText);
         //GameManager.UpdateTeamsSettings.AddListener(ShowTeamName);
-        GameManager.UpdateCountOfTeams.AddListener(UpdateNumOfMembers);
+        TeamsManager.UpdateCountOfTeams.AddListener(UpdateNumOfMembers);
         GameManager.OnStartGame.AddListener(OnStartGame);
         GameManager.OnFailStartGame.AddListener(OnFailStartGame);
         
@@ -34,7 +41,7 @@ public class CurrentGameInfo : MonoBehaviour
         UpdateNumOfMembers();
         UpdatePointsText();
         UpdateRoundsText();
-        for (int i = 0; i < gameManager.GetCountOfTeams(); i++)
+        for (int i = 0; i < teamsManager.GetCountOfTeams(); i++)
         {
             GetTeamsNames(i);
         }
@@ -44,9 +51,9 @@ public class CurrentGameInfo : MonoBehaviour
     {
         if (indexTeam >= 0 && indexTeam < _teamsNameField.Length)
         {
-            if (!string.IsNullOrWhiteSpace(gameManager.GetTeamSettings(indexTeam)))
+            if (!string.IsNullOrWhiteSpace(teamsManager.GetTeamSettings(indexTeam)))
             {
-                _teamsNameField[indexTeam].text = $"{indexTeam + 1}: {gameManager.GetTeamSettings(indexTeam)}";
+                _teamsNameField[indexTeam].text = $"{indexTeam + 1}: {teamsManager.GetTeamSettings(indexTeam)}";
             }
             else
             {
@@ -57,17 +64,17 @@ public class CurrentGameInfo : MonoBehaviour
 
     private void UpdateNumOfMembers()
     {
-        _membersInfoField.text = $"Участвует команд: {gameManager.GetCountOfTeams()}";
+        _membersInfoField.text = $"Участвует команд: {teamsManager.GetCountOfTeams()}";
     }
 
     private void UpdatePointsText()
     {
-        _pointsInfo.text = "Очки до победы: " + gameManager.GetTargetNumOfPoints().ToString();
+        _pointsInfo.text = "Очки до победы: " + pointsAndRoundsManager.GetTargetNumOfPoints().ToString();
     }
 
     private void UpdateRoundsText()
     {
-        _roundsInfo.text = "Раунды игры: " + gameManager.GetTargetNumOfRounds().ToString();
+        _roundsInfo.text = "Раунды игры: " + pointsAndRoundsManager.GetTargetNumOfRounds().ToString();
     }
 
     public void OnButtonStartGame()

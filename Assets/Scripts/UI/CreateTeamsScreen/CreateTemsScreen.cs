@@ -12,9 +12,11 @@ public class CreateTemsScreen : MonoBehaviour
 
     [SerializeField] private TeamSettingWindow _teamSettingWindow;
     private GameManager gameManager;
+    private TeamsManager teamsManager;
 
     private void Awake()
-    {        
+    {
+        teamsManager = FindObjectOfType<TeamsManager>();
         gameManager = FindObjectOfType<GameManager>();
     }
 
@@ -40,7 +42,7 @@ public class CreateTemsScreen : MonoBehaviour
    
     public void OnButtonDeleteTeam(int teamIndex)
     {
-        gameManager.DeleteTeam(teamIndex);
+        teamsManager.DeleteTeam(teamIndex);
         _teams[teamIndex].SetActive(false);
         _buttonsAddTeam[teamIndex].gameObject.SetActive(true);
 

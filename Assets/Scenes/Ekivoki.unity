@@ -2432,7 +2432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &211402976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5208,7 +5208,7 @@ GameObject:
   - component: {fileID: 412330667}
   - component: {fileID: 412330666}
   m_Layer: 5
-  m_Name: Button_Team_Name_Change
+  m_Name: Button_Set_Team_One_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5280,7 +5280,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 420232662}
         m_TargetAssemblyTypeName: TeamSettingWindow, Assembly-CSharp
-        m_MethodName: OnButtonTeamNameChange
+        m_MethodName: OnButtonSetTeamName
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5507,6 +5507,8 @@ GameObject:
   m_Component:
   - component: {fileID: 437231364}
   - component: {fileID: 437231365}
+  - component: {fileID: 437231366}
+  - component: {fileID: 437231367}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -5545,8 +5547,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855984eac83b04549aa38369a95debaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsSetTwoMinuts: 0
   _timer: {fileID: 2053591218}
+--- !u!114 &437231366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437231363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8a78b84af6e174e83a6ad7c7857d6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsSetTwoMinuts: 0
+--- !u!114 &437231367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437231363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d1715de0cbc784bb30aaa3f32cf6f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &448035457
 GameObject:
   m_ObjectHideFlags: 0
@@ -6605,7 +6631,7 @@ GameObject:
   - component: {fileID: 520620648}
   - component: {fileID: 520620647}
   m_Layer: 5
-  m_Name: Batton_Team_Name_Change
+  m_Name: Batton_Set_Team_Three_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6677,7 +6703,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 420232662}
         m_TargetAssemblyTypeName: TeamSettingWindow, Assembly-CSharp
-        m_MethodName: OnButtonTeamNameChange
+        m_MethodName: OnButtonSetTeamName
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8566,13 +8592,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 535681268}
-        m_TargetAssemblyTypeName: PointsAndRounds, Assembly-CSharp
+        m_TargetAssemblyTypeName: PointsAndRoundsScreen, Assembly-CSharp
         m_MethodName: OnButtonRoundsPlus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -10199,7 +10225,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00030517578, y: -2183.4697}
+  m_AnchoredPosition: {x: 0.0014648438, y: -2183.4695}
   m_SizeDelta: {x: 830, y: 6200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &856456016
@@ -12909,13 +12935,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 535681268}
-        m_TargetAssemblyTypeName: PointsAndRounds, Assembly-CSharp
+        m_TargetAssemblyTypeName: PointsAndRoundsScreen, Assembly-CSharp
         m_MethodName: OnButtonPointsPlus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -15631,13 +15657,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 535681268}
-        m_TargetAssemblyTypeName: PointsAndRounds, Assembly-CSharp
+        m_TargetAssemblyTypeName: PointsAndRoundsScreen, Assembly-CSharp
         m_MethodName: OnButtonRoundsMinus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -16383,7 +16409,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1618301990}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.7043535}
+  m_AnchorMin: {x: 0, y: 0.70436215}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -16545,8 +16571,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1310920059}
   m_HandleRect: {fileID: 1310920058}
   m_Direction: 2
-  m_Value: 1.0000002
-  m_Size: 0.2956465
+  m_Value: 1.0000001
+  m_Size: 0.29563788
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -17956,7 +17982,7 @@ GameObject:
   - component: {fileID: 1550348531}
   - component: {fileID: 1550348530}
   m_Layer: 5
-  m_Name: Batton_Team_Name_Change
+  m_Name: Batton_Set_Team_Two_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18028,7 +18054,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 420232662}
         m_TargetAssemblyTypeName: TeamSettingWindow, Assembly-CSharp
-        m_MethodName: OnButtonTeamNameChange
+        m_MethodName: OnButtonSetTeamName
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18355,7 +18381,7 @@ GameObject:
   - component: {fileID: 1590968723}
   - component: {fileID: 1590968722}
   m_Layer: 5
-  m_Name: Batton_Four_Name_Change
+  m_Name: Batton_Set_Team_Four_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18427,7 +18453,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 420232662}
         m_TargetAssemblyTypeName: TeamSettingWindow, Assembly-CSharp
-        m_MethodName: OnButtonTeamNameChange
+        m_MethodName: OnButtonSetTeamName
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19517,7 +19543,7 @@ RectTransform:
   m_Father: {fileID: 812348871}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.99999446, y: 1}
+  m_AnchorMax: {x: 0.9999674, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20834,13 +20860,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 535681268}
-        m_TargetAssemblyTypeName: PointsAndRounds, Assembly-CSharp
+        m_TargetAssemblyTypeName: PointsAndRoundsScreen, Assembly-CSharp
         m_MethodName: OnButtonPointsMinus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -23967,7 +23993,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1719006389}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999446
+  m_Size: 0.9999674
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -25554,7 +25580,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 535681268}
-        m_TargetAssemblyTypeName: PointsAndRounds, Assembly-CSharp
+        m_TargetAssemblyTypeName: PointsAndRoundsScreen, Assembly-CSharp
         m_MethodName: OnButtonSetTwoMinuts
         m_Mode: 1
         m_Arguments:
@@ -25563,7 +25589,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &2133499805
 GameObject:
