@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         pointsAndRoundsManager = FindObjectOfType<PointsAndRoundsManager>();
         teamsManager = FindObjectOfType<TeamsManager>();
         wordDatabaseReader = FindObjectOfType<WordDatabaseReader>();
-        _dice = FindObjectOfType<DiceTest>();
+        _dice = FindObjectOfType<Dice2DSprite>();
     }
     public void StartGame()
     {
@@ -82,8 +82,7 @@ public class GameManager : MonoBehaviour
     }
     public void StartTimer()
     {
-        //Debug.Log(IsSetTwoMinuts.ToString());
-        //Debug.Log(currentDiceTopFace);
+        //Debug.Log(IsSetTwoMinuts.ToString());        
         if (pointsAndRoundsManager.IsGivenTwoMinuts() && currentDiceTopFace == 6)
         {
             _timer.SetTwoMinuts(120f);
@@ -108,7 +107,7 @@ public class GameManager : MonoBehaviour
 
         if (currentRound > pointsAndRoundsManager.GetTargetNumOfRounds())
         {
-            CheckMaxScoreTeam();
+            CheckMaxScoreTeams();
         }
     }
     private void CheckWinningTeam()
@@ -130,7 +129,26 @@ public class GameManager : MonoBehaviour
             StartMove();
         }
     }
-    private void CheckMaxScoreTeam()
+    private void CheckMaxScoreTeams()
+    {
+        int maxScore = teamsManager.teamScore.Values.Max();
+
+        var maxScoreTeams = teamsManager.teamScore
+            .Where(pair => pair.Value == maxScore)
+            .Select(pair => new { TeamIndex = pair.Key, TeamScore = pair.Value })
+            .ToList();
+
+        if (maxScoreTeams.Count > 0)
+        {
+            foreach (var maxScoreTeam in maxScoreTeams)
+            {
+                WinningInfo.Invoke(maxScoreTeam.TeamIndex, maxScoreTeam.TeamScore);
+            }
+
+            EndGame();
+        }
+    }
+    /*private void CheckMaxScoreTeam()
     {
         int maxScore = teamsManager.teamScore.Values.Max();
         var maxScoreTeam = teamsManager.teamScore.FirstOrDefault(x => x.Value == maxScore);
@@ -143,7 +161,7 @@ public class GameManager : MonoBehaviour
             WinningInfo.Invoke(maxScoreTeamIndex, maxScoreTeamScore); 
             EndGame();
         }
-    }    
+    }    */
     private void EndGame()
     {
         OnEndGame.Invoke();

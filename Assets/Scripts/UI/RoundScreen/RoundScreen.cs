@@ -78,12 +78,12 @@ public class RoundScreen : MonoBehaviour
     {
         switch (resultDice)
         {
-            case 1: return "словами";
-            case 2: return "наоборот";
-            case 3: return "жесты";
-            case 4: return "рисунок";
-            case 5: return "пластилин*";
-            case 6: return "да/нет";
+            case 1: return "СЛОВАМИ";
+            case 2: return "НАОБОРОТ";
+            case 3: return "ЖЕСТЫ";
+            case 4: return "РИСУНОК";
+            case 5: return "ПЛАСТИЛИН*";
+            case 6: return "ДА/НЕТ";
             default: return string.Empty;
         }
     }

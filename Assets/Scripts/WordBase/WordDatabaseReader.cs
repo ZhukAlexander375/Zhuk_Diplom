@@ -6,7 +6,7 @@ using TMPro;
 
 public class WordDatabaseReader : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _displayText;
+    //[SerializeField] private TMP_Text _displayText;
 
     private List<string> _wordList = new();
     private List<string> _usedWords = new();

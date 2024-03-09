@@ -20,18 +20,26 @@ public class ResultsScreen : MonoBehaviour
         pointsAndRoundsManager = FindObjectOfType<PointsAndRoundsManager>();
         teamsManager = FindObjectOfType<TeamsManager>();
         gameManager = FindObjectOfType<GameManager>();
+
+        TeamsManager.UpdateTeamsSettings.AddListener(GetTeamsNames);
         TeamsManager.UpdateScore.AddListener(UpdateResulScreens);
         GameManager.OnEndGame.AddListener(OpenEndScreen);
     }
 
     private void Start()
     {
+        UpdateTeamsNames();
+                
+    }
+    private void UpdateTeamsNames()
+    {
         for (int i = 0; i < teamsManager.GetCountOfTeams(); i++)
-        {           
+        {
             GetTeamsNames(i);
-        }           
-    }    
-    
+        }
+    }
+
+
     private void GetTeamsNames(int indexTeam)
     {
         if (indexTeam >= 0 && indexTeam < _teamsNameField.Length)

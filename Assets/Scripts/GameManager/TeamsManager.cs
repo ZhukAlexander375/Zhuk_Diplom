@@ -46,7 +46,7 @@ public class TeamsManager : MonoBehaviour
             teamNames.Remove(teamIndex);
             teamScore.Remove(teamIndex);
         }
-        //Debug.Log($"удалил команду с индексом {teamIndex} и названием");
+        //Debug.Log($"удалил команду с индексом {teamIndex}");
         //Debug.Log($"после удаления teamNames" + string.Join(", ", teamNames));
         //Debug.Log($"чекну после удаления teamScore" + string.Join(", ", teamScore));
         UpdateTeamInfoEvent(teamIndex);

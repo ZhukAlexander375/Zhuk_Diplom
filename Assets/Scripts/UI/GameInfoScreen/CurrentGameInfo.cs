@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.UI;
 
 public class CurrentGameInfo : MonoBehaviour
 {   
@@ -12,7 +13,8 @@ public class CurrentGameInfo : MonoBehaviour
     [SerializeField] private TMP_Text _roundsInfo;
     [SerializeField] private GameObject _gameInfoScreen;
     [SerializeField] private GameObject _roundStartScreen;
-    [SerializeField] private GameObject _failStartWindow;
+    [SerializeField] private Button _failStartWindow;
+
 
     private GameManager gameManager;
     private TeamsManager teamsManager;
@@ -28,9 +30,13 @@ public class CurrentGameInfo : MonoBehaviour
 
         PointsAndRoundsManager.OnIncreaseNumOfPoints.AddListener(UpdatePointsText);
         PointsAndRoundsManager.OnDecreaseNumOfPoints.AddListener(UpdatePointsText);
+
         PointsAndRoundsManager.OnIncreaseNumOfRounds.AddListener(UpdateRoundsText);
-        //GameManager.UpdateTeamsSettings.AddListener(ShowTeamName);
+        PointsAndRoundsManager.OnDecreaseNumOfRounds.AddListener(UpdateRoundsText);
+
+        TeamsManager.UpdateTeamsSettings.AddListener(GetTeamsNames);
         TeamsManager.UpdateCountOfTeams.AddListener(UpdateNumOfMembers);
+
         GameManager.OnStartGame.AddListener(OnStartGame);
         GameManager.OnFailStartGame.AddListener(OnFailStartGame);
         
@@ -38,9 +44,18 @@ public class CurrentGameInfo : MonoBehaviour
 
     void Start()
     {
+        _failStartWindow.gameObject.SetActive(false);
         UpdateNumOfMembers();
         UpdatePointsText();
         UpdateRoundsText();
+        UpdateTeamsNames();        
+    }
+    private void UpdateNumOfMembers()
+    {
+        _membersInfoField.text = $"<color={GlobalColorSettings.textSelectionColor}>”◊¿—“¬”≈“  ŒÃ¿Õƒ:  </color> <color={GlobalColorSettings.textMainColor}>{teamsManager.GetCountOfTeams()}</color>";
+    }    
+    private void UpdateTeamsNames()
+    {
         for (int i = 0; i < teamsManager.GetCountOfTeams(); i++)
         {
             GetTeamsNames(i);
@@ -60,21 +75,16 @@ public class CurrentGameInfo : MonoBehaviour
                 _teamsNameField[indexTeam].text = "";
             }
         }
-    }    
-
-    private void UpdateNumOfMembers()
-    {
-        _membersInfoField.text = $"”˜‡ÒÚ‚ÛÂÚ ÍÓÏ‡Ì‰: {teamsManager.GetCountOfTeams()}";
-    }
+    }       
 
     private void UpdatePointsText()
     {
-        _pointsInfo.text = "Œ˜ÍË ‰Ó ÔÓ·Â‰˚: " + pointsAndRoundsManager.GetTargetNumOfPoints().ToString();
+        _pointsInfo.text = $"<color={GlobalColorSettings.textSelectionColor}>Œ◊ » ƒŒ œŒ¡≈ƒ€:  </color>{pointsAndRoundsManager.GetTargetNumOfPoints()}";
     }
 
     private void UpdateRoundsText()
     {
-        _roundsInfo.text = "–‡ÛÌ‰˚ Ë„˚: " + pointsAndRoundsManager.GetTargetNumOfRounds().ToString();
+        _roundsInfo.text = $"<color={GlobalColorSettings.textSelectionColor}>–¿”Õƒ€ »√–€:  </color>{pointsAndRoundsManager.GetTargetNumOfRounds()}";
     }
 
     public void OnButtonStartGame()
@@ -89,11 +99,11 @@ public class CurrentGameInfo : MonoBehaviour
 
     private void OnFailStartGame()
     {
-        _failStartWindow.SetActive(true);
+        _failStartWindow.gameObject.SetActive(true);
     }
 
     public void OnButtonFailStart()
     {
-        _failStartWindow.SetActive(false);
+        _failStartWindow.gameObject.SetActive(false);
     }
 }

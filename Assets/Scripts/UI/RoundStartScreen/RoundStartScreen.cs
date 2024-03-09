@@ -18,6 +18,9 @@ public class RoundStartScreen : MonoBehaviour
     [SerializeField] private GameObject _roundStartScreen;
     [SerializeField] private GameObject _roundScreen;
 
+    [SerializeField] private Image _diceTopFaceImage;
+    [SerializeField] private Sprite[] _diceFaces;
+
     private GameManager gameManager;
     private PointsAndRoundsManager pointsAndRoundsManager;
     private TeamsManager teamsManager;
@@ -32,10 +35,9 @@ public class RoundStartScreen : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         teamsManager = FindObjectOfType<TeamsManager>();
 
-
-
         GameManager.UpdateRoundInfo.AddListener(UpdateCurrentRoundInfo);
         GameManager.UpdateCurrentTeam.AddListener(UpdateCurrentTeamInfo);
+
         GameManager.OnDiceResult.AddListener(ShowRollDiceResult);
         GameManager.OnDiceResult.AddListener(ShowAction);
     }
@@ -44,8 +46,6 @@ public class RoundStartScreen : MonoBehaviour
     {
         startRound = pointsAndRoundsManager.GetCurrentRound();
         targetRound = pointsAndRoundsManager.GetTargetNumOfRounds();
-
-        //currentTeamForRound = gameManager.GetTeamForRound();
 
         _buttonRollDice.gameObject.SetActive(true);
         _buttonStartRound.gameObject.SetActive(false);
@@ -57,14 +57,14 @@ public class RoundStartScreen : MonoBehaviour
 
     private void UpdateCurrentRoundInfo(int currentRound, int targetRound)
     {
-        _currentRoundField.text = $"–‡ÛÌ‰ {currentRound} ËÁ {targetRound}";
+        _currentRoundField.text = $"–¿”Õƒ {currentRound} »« {targetRound}";
     }
 
     private void UpdateCurrentTeamInfo(string teamName)
     {
         if (!_buttonStartRound.gameObject.activeSelf)
         {
-            _currentTeamField.text = $"ıÓ‰ ÍÓÏ‡Ì‰˚: {teamsManager.GetTeamForRound()}";
+            _currentTeamField.text = $"<color={GlobalColorSettings.teamNameColor}>{teamsManager.GetTeamForRound()}</color>";
         }
     }
 
@@ -79,6 +79,11 @@ public class RoundStartScreen : MonoBehaviour
 
     private void ShowRollDiceResult(int diceTopFace)
     {
+        if (_diceTopFaceImage != null && diceTopFace >= 1 && diceTopFace <= _diceFaces.Length)
+        {
+            _diceTopFaceImage.sprite = _diceFaces[diceTopFace - 1];
+        }
+
         _diceResultField.text = diceTopFace.ToString();
     }
     
@@ -91,12 +96,12 @@ public class RoundStartScreen : MonoBehaviour
     {
         switch (resultDice)
         {
-            case 1: return "ÒÎÓ‚‡ÏË";
-            case 2: return "Ì‡Ó·ÓÓÚ";
-            case 3: return "ÊÂÒÚ˚";
-            case 4: return "ËÒÛÌÓÍ";
-            case 5: return "ÔÎ‡ÒÚËÎËÌ*";
-            case 6: return "‰‡/ÌÂÚ";
+            case 1: return "—ÀŒ¬¿Ã»";
+            case 2: return "Õ¿Œ¡Œ–Œ“";
+            case 3: return "∆≈—“€";
+            case 4: return "–»—”ÕŒ ";
+            case 5: return "œÀ¿—“»À»Õ*";
+            case 6: return "ƒ¿/Õ≈“";
             default: return string.Empty;
         }
     }
